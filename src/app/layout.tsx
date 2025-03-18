@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import StoreProvider from "@/store/provider";
 import GraphQLProvider from "@/providers/graphqlProvider";
-
+import DefaultLayout from "@/components/_shared/Layout/RootLayout";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,7 +19,9 @@ export default function RootLayout({
      <body>
       <GraphQLProvider>
         <StoreProvider>
-          {children}
+          <DefaultLayout>
+            {children}
+          </DefaultLayout>
           </StoreProvider>
       </GraphQLProvider>
       </body>
