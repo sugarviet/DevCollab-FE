@@ -1,8 +1,11 @@
 'use client'
 
+import { useMutation } from "@apollo/client";
+
 import { useForm } from "react-hook-form";
 import { Email, Password } from "@/components/Form";
 import { Button } from "@/components/_shared/UI";
+import { LOGIN_MUTATION } from "@/graphql/auth";
 
 type SignInForm = {
   email: string;
@@ -15,9 +18,16 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInForm>();
+  const [login, { loading }] = useMutation(LOGIN_MUTATION);
 
-  const onSubmit = (data: SignInForm) => {
-    console.log("Đăng nhập với:", data);
+  console.log('loading', loading)
+
+  const onSubmit = async (data: SignInForm) => {
+    try {
+       await login({ variables: data });
+    } catch (err) {
+      console.error("Lỗi đăng nhập:", err);
+    }
   };
 
   return (

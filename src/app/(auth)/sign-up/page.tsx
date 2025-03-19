@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { Email, Password } from "@/components/Form";
+import { ConfirmPassword, Email, Password } from "@/components/Form";
 import { Button } from "@/components/_shared/UI";
 import { useRouter } from "next/navigation";
 
@@ -15,15 +15,19 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
-    watch,
+    setError,
     formState: { errors },
   } = useForm<SignUpForm>();
 
   const router = useRouter();
 
   const onSubmit = async (data: SignUpForm) => {
-    console.log("Đăng ký với:", data);
-    router.push("/auth/sign-in"); // ✅ Chuyển hướng sau khi đăng ký thành công
+    if (data.password !== data.confirmPassword) {
+      setError("confirmPassword", { message: "Mật khẩu không khớp" });
+      return;
+    }
+    console.log("Đăng ký với:", data); 
+   router.push("/auth/sign-in"); 
   };
 
   return (
@@ -41,18 +45,14 @@ export default function SignUp() {
             <Password 
               register={register} 
               error={errors.password} 
-              name="password"
-              label="Mật khẩu"
             />
           </div>
 
           {/* Xác nhận mật khẩu */}
           <div className="mb-4">
-            <Password
+            <ConfirmPassword
               register={register}
               error={errors.confirmPassword}
-              name="confirmPassword"
-              label="Xác nhận mật khẩu"
             />
           </div>
 
