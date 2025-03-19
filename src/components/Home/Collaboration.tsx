@@ -29,13 +29,12 @@ export default function Collaboration() {
           </ul>
 
           <div className="flex justify-center">
-            {/* <Image 
-              src="/collab-illustration.png" 
+            <Image 
+              src="/gif/screen.gif" 
               alt="Collaboration Illustration"
               width={400}
-              height={300}
-              className="rounded-lg shadow-lg"
-            /> */}
+              height={400}
+            />
           </div>
         </div>
       </div>
