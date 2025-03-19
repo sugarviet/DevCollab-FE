@@ -1,7 +1,12 @@
+import { Hero, CTA, Features, Testimonials, Collaboration  } from "@/components/Home";
 export default function Home() {
   return (
     <div>
-     <h1>Hi there</h1>
+     <Hero />
+      <Collaboration />
+      <Features />
+      <Testimonials />
+      <CTA />
     </div>
   );
 }
