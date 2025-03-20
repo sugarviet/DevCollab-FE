@@ -1,5 +1,8 @@
+'use client'
+
+import AuthWrapper from "@/components/Auth/withAuthorized";
 import { Hero, CTA, Features, Testimonials, Collaboration  } from "@/components/Home";
-export default function Home() {
+const Home = () => {
   return (
     <div>
      <Hero />
@@ -10,3 +13,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default AuthWrapper(Home);
