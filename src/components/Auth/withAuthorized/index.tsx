@@ -4,7 +4,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { isEmpty } from "lodash";
-import { getToken } from "@/services/getToken";
+import { getToken } from "@/services/auth";
+import { ROUTER } from "@/constants";
 
 const withAuthorized = (WrappedComponent: React.ComponentType) => {
     const AuthComponent = (props: any) => {
@@ -13,7 +14,7 @@ const withAuthorized = (WrappedComponent: React.ComponentType) => {
 
         useEffect(() => {
             if (isEmpty(accessToken)) {
-              router.push("/sign-in");
+              router.push(ROUTER.LOGIN);
             }
           }, [accessToken]);
 

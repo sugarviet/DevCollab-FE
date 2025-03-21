@@ -1,11 +1,16 @@
 'use client'
 
 import { useMutation } from "@apollo/client";
-
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Email, Password } from "@/components/Form";
 import { Button } from "@/components/_shared/UI";
 import { LOGIN_MUTATION } from "@/graphql/auth";
+import { setLocalStorage } from "@/services/auth";
+import { ACCESS_TOKEN, ROUTER } from "@/constants";
+import { get } from "lodash";
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "@/store/slices/authSlice";
 
 type SignInForm = {
   email: string;
@@ -19,17 +24,28 @@ export default function SignIn() {
     formState: { errors },
   } = useForm<SignInForm>();
   const [login, { loading }] = useMutation(LOGIN_MUTATION);
-
+  const router = useRouter();
+  const dispatch = useDispatch();
   console.log('loading', loading)
 
   const onSubmit = async (data: SignInForm) => {
     try {
-       await login({ variables: data });
+      const response = await login({ variables: data });
+      const token = get(response, "data.login.token", "");
+      setLocalStorage(ACCESS_TOKEN, token);
+      
+      dispatch(setAccessToken({
+        token,
+        callback: () => {
+          router.push(ROUTER.HOME);
+        }
+      }));
+  
     } catch (err) {
       console.error("Lỗi đăng nhập:", err);
     }
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-lg p-6 bg-white shadow-lg rounded-lg">

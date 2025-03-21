@@ -1,7 +1,6 @@
-'use client'
 
-import AuthWrapper from "@/components/Auth/withAuthorized";
 import { Hero, CTA, Features, Testimonials, Collaboration  } from "@/components/Home";
+
 const Home = () => {
   return (
     <div>
@@ -14,4 +13,4 @@ const Home = () => {
   );
 }
 
-export default AuthWrapper(Home);
+export default Home;
