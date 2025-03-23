@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 'use client'
 
 import React from "react";
@@ -7,42 +7,37 @@ import { Button } from "../../UI";
 import { Avatar, Dropdown, MenuProps } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { APP_NAME, ROUTER } from "@/constants";
-import { useRouter } from "next/navigation";
 import { isEmpty } from "lodash";
-import { RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { clearAccessToken } from "@/store/slices/authSlice";
+import useToken from "@/components/Auth/hooks/useToken";
+import useNavigation from "@/hooks/useNavigation";
 
 export default function Navbar() {
-  const accessToken = useSelector((state: RootState) => state.auth?.accessToken);
-  const dispatch = useDispatch();
+  const { accessToken } = useToken();
 
     return (
       <nav className="w-full bg-blue-500 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold">{APP_NAME}</h1>
+          <Link className="text-xl font-bold" href={ROUTER.HOME}>{APP_NAME}</Link>
           <ul className="flex gap-4">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/dashboard">Dashboard</Link></li>
+            <li><Link href={ROUTER.POSTS}>Bài Viết</Link></li>
           </ul>
           {
-            isEmpty(accessToken) ? <RegisterButton /> : <UserDropdown dispatch={dispatch} />
+            isEmpty(accessToken) ? <RegisterButton /> : <UserDropdown />
           }
         </div>
       </nav>
     );
   }
   
-  const UserDropdown = ({dispatch}: {dispatch:any}) => {
-    const handleLogout = () => {
-      dispatch(clearAccessToken());
-    }
+  const UserDropdown = () => {
+    const { handleClearAccessToken } = useToken();
+
 
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-         <Button onClick={handleLogout}>Đăng Xuất</Button>
+         <Button onClick={handleClearAccessToken}>Đăng Xuất</Button>
     ),
   },
     ];
@@ -55,11 +50,7 @@ export default function Navbar() {
   }
 
   const RegisterButton = () => {
-    const router = useRouter();
-
-    const handleGotoLogin = () => {
-      router.push(ROUTER.LOGIN);
-    }
+    const { handleGotoLogin } = useNavigation();
 
     return (
       <Button onClick={handleGotoLogin}>Đăng Nhập</Button>

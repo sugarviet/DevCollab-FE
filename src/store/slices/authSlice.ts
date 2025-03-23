@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN } from "@/constants";
+import { getAccessToken } from "@/services/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
@@ -6,7 +7,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  accessToken: localStorage.getItem(ACCESS_TOKEN),
+  accessToken: getAccessToken(),
 };
 
 export const authSlice = createSlice({

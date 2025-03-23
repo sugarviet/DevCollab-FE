@@ -1,5 +1,3 @@
-'use client'
-
 import { APP_NAME } from "@/constants";
 import Link from "next/link";
 
@@ -18,7 +16,7 @@ export default function Footer() {
       </div>
 
       <div className="mt-10 text-sm opacity-75">
-        © {new Date().getFullYear()} {APP_NAME}. All rights reserved.
+        © 2025 {APP_NAME}. All rights reserved.
       </div>
     </footer>
   );

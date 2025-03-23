@@ -1,16 +1,13 @@
 'use client'
 
 import { useMutation } from "@apollo/client";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Email, Password } from "@/components/Form";
 import { Button } from "@/components/_shared/UI";
 import { LOGIN_MUTATION } from "@/graphql/auth";
-import { setLocalStorage } from "@/services/auth";
-import { ACCESS_TOKEN, ROUTER } from "@/constants";
 import { get } from "lodash";
-import { useDispatch } from "react-redux";
-import { setAccessToken } from "@/store/slices/authSlice";
+import useToken from "@/components/Auth/hooks/useToken";
+import useNavigation from "@/hooks/useNavigation";
 
 type SignInForm = {
   email: string;
@@ -23,23 +20,15 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInForm>();
-  const [login, { loading }] = useMutation(LOGIN_MUTATION);
-  const router = useRouter();
-  const dispatch = useDispatch();
-  console.log('loading', loading)
+  const [login] = useMutation(LOGIN_MUTATION);
+  const {handleSetAccessToken} = useToken();
+  const {handleGotoHome} = useNavigation();
 
   const onSubmit = async (data: SignInForm) => {
     try {
       const response = await login({ variables: data });
       const token = get(response, "data.login.token", "");
-      setLocalStorage(ACCESS_TOKEN, token);
-      
-      dispatch(setAccessToken({
-        token,
-        callback: () => {
-          router.push(ROUTER.HOME);
-        }
-      }));
+      handleSetAccessToken({token, callback: handleGotoHome});
   
     } catch (err) {
       console.error("Lỗi đăng nhập:", err);
