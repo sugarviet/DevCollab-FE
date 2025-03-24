@@ -6,3 +6,9 @@ export const ROUTER = {
     HOME: '/',
     POSTS: '/posts'
 }
+
+export const SOCKET = {
+    JOIN_ROOM: 'joinRoom',
+    CODE_UPDATE: 'codeUpdate',
+    UPDATE_CODE: 'updateCode'
+}

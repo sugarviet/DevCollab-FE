@@ -16,6 +16,10 @@ const useNavigation = () => {
         router.push(ROUTER.POSTS);
     }
 
+    const handleGotoPost = (id: string) => {
+        router.push(`${ROUTER.POSTS}/${id}`);
+    }
+
     const handleGoBack = () => {
         router.back();
     }
@@ -24,7 +28,8 @@ const useNavigation = () => {
     handleGotoLogin,
     handleGotoHome,
     handleGoBack,
-    handleGotoPosts
+    handleGotoPosts,
+    handleGotoPost
   }
 }
 

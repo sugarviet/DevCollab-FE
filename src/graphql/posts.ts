@@ -7,7 +7,8 @@ export const GET_POST = gql`
       title
       content
       author
-      createdAt
+      createdAt,
+      code
     }
   }
 `;
@@ -19,6 +20,7 @@ export const GET_POSTS = gql`
       title
       author
       createdAt
+      content,
     }
   }
 `;
