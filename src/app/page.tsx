@@ -1,14 +1,9 @@
 
-import { Hero, CTA, Features, Testimonials, Collaboration  } from "@/components/Home";
 
 const Home = () => {
   return (
     <div>
-     <Hero />
-      <Collaboration />
-      <Features />
-      <Testimonials />
-      <CTA />
+      Home Page
     </div>
   );
 }
